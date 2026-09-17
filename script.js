@@ -1,0 +1,11 @@
+const products=[
+ {name:"Samsung Galaxy A55 8/256GB",price:"3 199 000 so'm",old:"3 999 000 so'm",discount:"-20%",rating:"4.8 (120)",img:"📱"},
+ {name:"Lenovo IdeaPad 3 Ryzen 5, 8/512GB",price:"4 999 000 so'm",old:"5 899 000 so'm",discount:"-15%",rating:"4.7 (86)",img:"💻"},
+ {name:"AirPods 4 (Original)",price:"1 499 000 so'm",old:"1 999 000 so'm",discount:"-25%",rating:"4.9 (210)",img:"🎧"},
+ {name:"Haylou Solar Pro Smart Watch",price:"349 000 so'm",old:"499 000 so'm",discount:"-30%",rating:"4.6 (73)",img:"⌚"},
+ {name:"Samsung changyutgich 2000W",price:"1 799 000 so'm",old:"2 199 000 so'm",discount:"-18%",rating:"4.7 (54)",img:"🧹"}
+];
+const grid=document.querySelector("#productGrid");let cart=2;
+function render(list=products){grid.innerHTML=list.map((p,i)=>`<article class="product"><span class="discount">${p.discount}</span><button class="heart" aria-label="Sevimli">♡</button><div class="product-image">${p.img}</div><h3>${p.name}</h3><div class="rating"><b>★</b> ${p.rating}</div><div class="price">${p.price}</div><div class="old">${p.old}</div><button class="add" data-index="${i}" aria-label="Savatga qo'shish">🛒</button></article>`).join("");document.querySelectorAll(".add").forEach(btn=>btn.addEventListener("click",()=>{cart++;document.querySelector("#cartCount").textContent=cart;const toast=document.querySelector("#toast");toast.classList.add("show");setTimeout(()=>toast.classList.remove("show"),1500)}));document.querySelectorAll(".heart").forEach(b=>b.addEventListener("click",()=>b.textContent=b.textContent==="♡"?"♥":"♡"))}
+render();document.querySelector("#searchBtn").addEventListener("click",search);document.querySelector("#searchInput").addEventListener("keydown",e=>{if(e.key==="Enter")search()});function search(){const q=document.querySelector("#searchInput").value.trim().toLowerCase();render(q?products.filter(p=>p.name.toLowerCase().includes(q)):products)}
+const dots=[...document.querySelectorAll(".dot")];let current=0;function slide(n){current=(current+n+dots.length)%dots.length;dots.forEach((d,i)=>d.classList.toggle("active",i===current))}document.querySelector("#nextSlide").onclick=()=>slide(1);document.querySelector("#prevSlide").onclick=()=>slide(-1);dots.forEach((d,i)=>d.onclick=()=>{current=i;dots.forEach((x,j)=>x.classList.toggle("active",i===j))});
